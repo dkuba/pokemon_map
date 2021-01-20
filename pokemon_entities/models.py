@@ -6,9 +6,9 @@ class Pokemon(models.Model):
 
     title_ru = models.TextField(verbose_name='название на русском')
     title_en = models.TextField(verbose_name='название на английском',
-                                null=True, blank=True)
+                                blank=True)
     title_jp = models.TextField(verbose_name='название на японском',
-                                null=True, blank=True)
+                                blank=True)
     description = models.TextField(verbose_name='описание')
     photo = models.ImageField(verbose_name='фотография',
                               upload_to='pokemons', null=True, blank=True)
@@ -24,6 +24,7 @@ class PokemonEntity(models.Model):
     """Экземпляр покемона"""
 
     pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE,
+                                related_name='entities',
                                 verbose_name='покемон')
     latitude = models.FloatField(verbose_name='широта')
     longitude = models.FloatField(verbose_name='долгота')
