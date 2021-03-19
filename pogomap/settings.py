@@ -14,6 +14,7 @@ import os
 
 from dotenv import load_dotenv
 load_dotenv()
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -77,12 +78,26 @@ WSGI_APPLICATION = 'pogomap.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+DATABASES = {}
+DATABASES['default'] = dj_database_url.config(default='postgres://{}:{}@{}:{}/{}'.format(os.getenv('DATABASE_USER'),
+                                                                                         os.getenv(
+                                                                                              'DATABASE_PASSWORD'),
+                                                                                         os.getenv('DATABASE_HOST'),
+                                                                                         os.getenv('DATABASE_PORT'),
+                                                                                         os.getenv('DATABASE_NAME')))
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'pokemon_db',
+#         'USER': 'user',
+#         'PASSWORD': '1',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
+
 
 
 # Password validation
